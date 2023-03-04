@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="resources/css/style.css" type="text/css" rel="stylesheet"/>
+    <title>My Weather App</title>
+</head>
+
+<body>
+
+    <header>
+        <div class="search-container">
+                
+            <input type="search" id="search-bar" name="search-bar" autocomplete="on" list="suggestions"/>
+            <div class="search-options">
+
+            </div>
+            
+        </div>
+    </header>
+
+    <main>
+        
+        <div class="weather-container">
+
+            <div id="day-weather-slide-one"></div>
+
+            <div id="day-weather-slide-two"></div>
+
+            
+
+            <div class="chosen-day">
+
+                <div class="day-info-container">
+
+                    <div class="main-info">
+    
+                        <div class="date"></div>    
+                            
+                        <div class="weather-code-container"></div>
+                            
+                        <div class="temperature-container">
+                            <div class="max-temp">
+                                <p>max:</p>
+                                <p class="maxTemp"></p>
+                            </div>
+                            <div class="min-temp">
+                                <p>min:</p>
+                                <p class="minTemp"></p>
+                            </div>
+                        </div>
+                        
+                    </div>    
+                        
+                    <div class="extra-info">
+                            
+                        <div class="precip-container">
+                            <div class="precip-hours"></div>
+                            <div class="precip-probability"></div>
+                            <div class="precip-sum"></div>
+                        </div>
+                            
+                        <div class="sun-info-container">
+                            <div class="sunrise"></div>
+                            <div class="sunset"></div>
+                            <div class="max-uv-index"></div>
+                        </div>
+                            
+                        <div class="wind-container">
+                            <div class="wind-direction"></div>
+                            <div class="windspeed-max"></div>
+                            <div class="windspeed-min"></div>
+                        </div>
+                        
+                    </div>
+
+                </div>
+                
+            </div>    
+
+        </div>
+
+        <div class="remaining-day-cards">
+
+            <div class="day-card" onclick="cardClickHandler(1)">
+
+                <div class="card-date">
+
+                </div>
+
+                <div class="card-temps">
+                    <div class="card-t-min">
+                        <p>min:</p>
+                        <p class="minTempCard"></p>
+                    </div>
+                    <div class="card-t-max">
+                        <p>max:</p>
+                        <p class="maxTempCard"></p>
+                    </div>
+                </div>
+
+                <div class="card-weathercode">
+
+                </div>
+
+            </div>
+
+            <div class="day-card" onclick="cardClickHandler(2)">
+
+                <div class="card-date">
+
+                </div>
+
+                <div class="card-temps">
+                    <div class="card-t-min">
+                        <p>min:</p>
+                        <p class="minTempCard"></p>
+                    </div>
+                    <div class="card-t-max">
+                        <p>max:</p>
+                        <p class="maxTempCard"></p>
+                    </div>
+                </div>
+
+                <div class="card-weathercode">
+
+                </div>
+
+            </div>
+
+
+            <div class="day-card" onclick="cardClickHandler(3)">
+
+                <div class="card-date">
+
+                </div>
+
+                <div class="card-temps">
+                    <div class="card-t-min">
+                        <p>min:</p>
+                        <p class="minTempCard"></p>
+                    </div>
+                    <div class="card-t-max">
+                        <p>max:</p>
+                        <p class="maxTempCard"></p>
+                    </div>
+                </div>
+
+                <div class="card-weathercode">
+
+                </div>
+
+            </div>
+
+
+            <div class="day-card" onclick="cardClickHandler(4)">
+
+                <div class="card-date">
+
+                </div>
+
+                <div class="card-temps">
+                    <div class="card-t-min">
+                        <p>min:</p>
+                        <p class="minTempCard"></p>
+                    </div>
+                    <div class="card-t-max">
+                        <p>max:</p>
+                        <p class="maxTempCard"></p>
+                    </div>
+                </div>
+
+                <div class="card-weathercode">
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </main>
+    
+    <footer>
+
+    </footer>
+
+    <script src="resources/scripts/script.js" defer></script>
+</body>
+
+</html>

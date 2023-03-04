@@ -20,8 +20,8 @@ function userPosition() {
 function userLatLong(position) {
     const lat = position.coords.latitude;
     const long = position.coords.longitude;
-
-    console.log('Hello there');
+    
+    console.log(position);
 
     userRegion(lat, long);
 }

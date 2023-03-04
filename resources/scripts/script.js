@@ -11,23 +11,19 @@ let n = 0;
 
 let data;
 
-function UserLocalWeather() {
+function userPosition() {
 
-    let lat;
-    let long;
-     
-    navigator.geolocation.getCurrentPosition(function(position) {
-        lat = position.coords.latitude;
-        long = position.coords.longitude;
-    }, function(err) {
-        console.log(err);
-    });
+    navigator.geolocation.getCurrentPosition(userLatLong);
 
-    console.log(lat);
-    console.log(long);
+}
+
+function userLatLong(position) {
+    const lat = position.coords.latitude;
+    const long = position.coords.longitude;
+
+    console.log('Hello there');
 
     userRegion(lat, long);
-
 }
 
 async function userRegion(lat, long) {
@@ -585,4 +581,4 @@ window.addEventListener('click', input => {
     handleWindowClick(input.target);
 });
 
-window.addEventListener('load', UserLocalWeather);
+window.addEventListener('DOMContentLoaded', userPosition);

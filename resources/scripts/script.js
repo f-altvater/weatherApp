@@ -20,13 +20,20 @@ function userPosition() {
 function userLatLong(position) {
     const lat = position.coords.latitude;
     const long = position.coords.longitude;
-    
-    console.log(position);
 
     userRegion(lat, long);
 }
 
 async function userRegion(lat, long) {
+
+    await fetch(`https://geocode.maps.co/reverse?lat=${lat}&lon=${long}`)
+    .then(response => response.json())
+    .then(response => console.log(response))
+    .catch(err => console.log(err));
+
+}
+
+async function userRegionWeather(lat, long) {
 
     await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&timezone=auto&current_weather=true&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_hours,precipitation_probability_mean,sunrise,sunset,windspeed_10m_max,windspeed_10m_min,winddirection_10m_dominant,uv_index_max,weathercode`)
     .then(response => response.json())

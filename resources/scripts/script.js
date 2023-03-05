@@ -126,7 +126,6 @@ async function selectRegion(e) {
 
     const nameArr = name.split(', ');
     const firstAndLastIndexOfArr = [nameArr[0], nameArr[nameArr.length - 1]];
-    console.log(firstAndLastIndexOfArr);
 
     region = firstAndLastIndexOfArr.join(', ');
 
@@ -654,7 +653,6 @@ function handleArrowControl(inputKey) {
 */
 
 input.addEventListener('keydown', input => {
-    console.log(input.key);
     if(notTrackedKeys.indexOf(input.key) === -1 && arrowKeysTracked.indexOf(input.key) === -1){
         handleKeyDown();
     }

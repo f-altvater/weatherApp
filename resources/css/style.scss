@@ -6,6 +6,19 @@ $mainAccentBase: #e2712a;
 $smallAccentBase: #216230;
 
 
+@font-face {
+    font-display: swap;
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/openSans/open-sans-v34-latin-regular.eot'); 
+    src: url('../fonts/openSans/open-sans-v34-latin-regular.eot?#iefix') format('embedded-opentype'), 
+         url('../fonts/openSans/open-sans-v34-latin-regular.woff2') format('woff2'), 
+         url('../fonts/openSans/open-sans-v34-latin-regular.woff') format('woff'), 
+         url('../fonts/openSans/open-sans-v34-latin-regular.ttf') format('truetype'), 
+         url('../fonts/openSans/open-sans-v34-latin-regular.svg#OpenSans') format('svg'); 
+}        
+
 *{
     margin: 0;
     box-sizing: border-box;
@@ -14,6 +27,7 @@ $smallAccentBase: #216230;
 body{
     background-color: $darkmodeBase;
     font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
 }
 
 header{
@@ -510,6 +524,70 @@ main{
             background-color: $darkmodedarkerhue;
             box-shadow: 0px 0px 20px 2px $mainAccentBase;
             transform: translateY(-20px);
+        }
+    }
+}
+
+footer{
+    margin-top: 20px;
+    width: 100%;
+    border-top: 1px solid $mainAccentBase;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 10px;
+
+    .contact{
+        color: $brightmodeBase;
+
+        a{
+            text-decoration: none;
+            color: $brightmodeBase;
+        }
+
+        a:hover{
+            cursor: pointer;
+            text-decoration: underline;
+            color: $mainAccentBase;
+        }
+    }
+
+    .apis{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        h3{
+            width: 100%;
+            text-align: center;
+            color: $brightmodeBase;
+            border-bottom: $mainAccentBase;
+            font-size: 1.5rem;
+        }
+
+        p{
+            color: $brightmodeBase;
+            font-size: 1.2rem;
+        }
+
+        a{
+            text-decoration: none;
+            color: $brightmodeBase;
+        }
+
+        a:hover{
+            cursor: pointer;
+            text-decoration: underline;
+            color: $mainAccentBase;
+        }
+    }
+
+    .github-repo{
+        
+        img{
+            width: 50px;
+            height: 50px;
         }
     }
 }

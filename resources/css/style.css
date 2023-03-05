@@ -1,3 +1,11 @@
+@font-face {
+  font-display: swap;
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../fonts/openSans/open-sans-v34-latin-regular.eot");
+  src: url("../fonts/openSans/open-sans-v34-latin-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/openSans/open-sans-v34-latin-regular.woff2") format("woff2"), url("../fonts/openSans/open-sans-v34-latin-regular.woff") format("woff"), url("../fonts/openSans/open-sans-v34-latin-regular.ttf") format("truetype"), url("../fonts/openSans/open-sans-v34-latin-regular.svg#OpenSans") format("svg");
+}
 * {
   margin: 0;
   box-sizing: border-box;
@@ -6,6 +14,7 @@
 body {
   background-color: #263841;
   font-size: 16px;
+  font-family: "Open Sans", sans-serif;
 }
 
 header {
@@ -471,6 +480,58 @@ main .remaining-day-cards .day-card:hover {
   background-color: #1d2a31;
   box-shadow: 0px 0px 20px 2px #e2712a;
   transform: translateY(-20px);
+}
+
+footer {
+  margin-top: 20px;
+  width: 100%;
+  border-top: 1px solid #e2712a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 10px;
+}
+footer .contact {
+  color: #ebfbfc;
+}
+footer .contact a {
+  text-decoration: none;
+  color: #ebfbfc;
+}
+footer .contact a:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #e2712a;
+}
+footer .apis {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+footer .apis h3 {
+  width: 100%;
+  text-align: center;
+  color: #ebfbfc;
+  border-bottom: #e2712a;
+  font-size: 1.5rem;
+}
+footer .apis p {
+  color: #ebfbfc;
+  font-size: 1.2rem;
+}
+footer .apis a {
+  text-decoration: none;
+  color: #ebfbfc;
+}
+footer .apis a:hover {
+  cursor: pointer;
+  text-decoration: underline;
+  color: #e2712a;
+}
+footer .github-repo img {
+  width: 50px;
+  height: 50px;
 }
 
 /*# sourceMappingURL=style.css.map */

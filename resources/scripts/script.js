@@ -353,6 +353,7 @@ function iconPicker(weathercode) {
     const pickHeavyRain = [65, 67, 81, 82];
     const pickSnow = [71, 73, 75, 77, 85, 86];
     const pickStorm = [95, 96, 99];
+    const pickFog = [45, 48];
 
     let src;
     const pre = 'resources/images/large/';
@@ -380,6 +381,9 @@ function iconPicker(weathercode) {
 
     } else if(pickStorm.includes(weathercode)){
         src = pre + 'storm100.png';
+
+    } else if(pickFog.includes(weathercode)){
+        src = pre + 'fog100.png';
 
     }
 
@@ -614,7 +618,7 @@ function cardClickHandler(num) {
 
     } else {
         shownDay = num;
-        
+
     }
 
     displayData(data, region);

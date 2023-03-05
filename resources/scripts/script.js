@@ -10,6 +10,7 @@ let options = [];
 let n = 0;
 
 let data;
+let region;
 
 function userPosition() {
 
@@ -21,29 +22,38 @@ function userLatLong(position) {
     const lat = position.coords.latitude;
     const long = position.coords.longitude;
 
+    displayData(0, 0);
+
     userRegion(lat, long);
 }
 
 async function userRegion(lat, long) {
 
+    let city;
+
     await fetch(`https://geocode.maps.co/reverse?lat=${lat}&lon=${long}`)
     .then(response => response.json())
-    .then(response => console.log(response))
+    .then(response => {
+        city = response.address.city;
+    })
     .catch(err => console.log(err));
+
+    region = city;
+
+    userRegionWeather(lat, long, city);
 
 }
 
-async function userRegionWeather(lat, long) {
+async function userRegionWeather(lat, long, city) {
 
     await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&timezone=auto&current_weather=true&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_hours,precipitation_probability_mean,sunrise,sunset,windspeed_10m_max,windspeed_10m_min,winddirection_10m_dominant,uv_index_max,weathercode`)
     .then(response => response.json())
     .then(response => {
         data = response;
-        console.log(data);
     })
     .catch(err => console.log(err));
     
-    displayData(data);
+    displayData(data, city);
 
 }
 
@@ -109,38 +119,33 @@ async function selectRegion(e) {
     .then(response => response.json())
     .then(response => {
         data = response;
-        console.log(data);
     })
     .catch(err => console.log(err));
     
     optionsContainer.style.display = 'none';
 
-    displayData(data);
+    const nameArr = name.split(', ');
+    const firstAndLastIndexOfArr = [nameArr[0], nameArr[nameArr.length - 1]];
+    console.log(firstAndLastIndexOfArr);
+
+    region = firstAndLastIndexOfArr.join(', ');
+
+    displayData(data, region);
 
 }
 
 let shownDay = 0;
 
-function displayData(data) {
+function displayData(data, region) {
 
-    //storing accessed datas in their arrays for more clarification what is accessed from what element
-    const dates = data.daily.time;
-    const weathercodes = data.daily.weathercode;
-    const maxTemps = data.daily.temperature_2m_max;
-    const minTemps = data.daily.temperature_2m_min;
-    const sunrises = data.daily.sunrise;
-    const sunsets = data.daily.sunset;
-    const precipitationHours = data.daily.precipitation_hours;
-    const precipitationProbabilities = data.daily.precipitation_probability_mean;
-    const precipitationSums = data.daily.precipitation_sum;
-    const maxUV = data.daily.uv_index_max;
-    const windspeedMax = data.daily.windspeed_10m_max;
-    const windspeedMin = data.daily.windspeed_10m_min;
-    const windDegreeDirection = data.daily.winddirection_10m_dominant;
+    const regionName = document.querySelector('.region-name-container');
+    //const weatherContainer = document.querySelector('.weather-container');
 
     const mainInfo = document.querySelector('.main-info');
     const mainDate = mainInfo.querySelector('.date');
     const mainWeathercode = mainInfo.querySelector('.weather-code-container');
+    const mainWeathercodeTitle = mainWeathercode.querySelector('.weathercode-title');
+    const mainWeatherIcon = mainWeathercode.querySelector('.weather-icon');
     const mainMaxTemp = mainInfo.querySelector('.maxTemp');
     const mainMinTemp = mainInfo.querySelector('.minTemp');
 
@@ -157,46 +162,71 @@ function displayData(data) {
 
     const accentSlides = [document.getElementById('day-weather-slide-one'), document.getElementById('day-weather-slide-two')];
 
-    let sunriseHours = [];
-    let sunsetHours = [];
-    let weathercodeForHumans = weathercodeTranslator(weathercodes);
-    let dayNames = datesToNames(dates);
-    let windCardinalDirection = windDegreeToCardinal(windDegreeDirection);
+    if(data === 0 && region === 0) {
+        regionName.innerHTML = 'Loading...';
 
-    sunrises.forEach(date => {
-        sunriseHours.push(date.slice(11));
-    })
+    } else {
+        //storing accessed datas in their arrays for more clarification what is accessed from what element
+        const dates = data.daily.time;
+        const weathercodes = data.daily.weathercode;
+        const maxTemps = data.daily.temperature_2m_max;
+        const minTemps = data.daily.temperature_2m_min;
+        const sunrises = data.daily.sunrise;
+        const sunsets = data.daily.sunset;
+        const precipitationHours = data.daily.precipitation_hours;
+        const precipitationProbabilities = data.daily.precipitation_probability_mean;
+        const precipitationSums = data.daily.precipitation_sum;
+        const maxUV = data.daily.uv_index_max;
+        const windspeedMax = data.daily.windspeed_10m_max;
+        const windspeedMin = data.daily.windspeed_10m_min;
+        const windDegreeDirection = data.daily.winddirection_10m_dominant;
 
-    sunsets.forEach(date => {
-        sunsetHours.push(date.slice(11));
-    })
+        let sunriseHours = [];
+        let sunsetHours = [];
+        let weathercodeForHumans = weathercodeTranslator(weathercodes);
+        let dayNames = datesToNames(dates);
+        let windCardinalDirection = windDegreeToCardinal(windDegreeDirection);
 
-    mainInfo.style.display = 'inline-block';
+        sunrises.forEach(date => {
+            sunriseHours.push(date.slice(11));
+        })
 
-    const maxTempTag = document.createElement('p');
-    const minTempTag = document.createElement('p');
-    maxTempTag.classList.add('Temp');
-    minTempTag.classList.add('Temp');
+        sunsets.forEach(date => {
+            sunsetHours.push(date.slice(11));
+        })
 
-    mainDate.innerHTML = dayNames[shownDay];
-    mainWeathercode.innerHTML = weathercodeForHumans[shownDay];
-    mainMaxTemp.innerHTML = maxTemps[shownDay] + '°C';
-    mainMinTemp.innerHTML = minTemps[shownDay] + '°C';
-    extraPrecipHours.innerHTML = 'Precipitation Hours: ' + precipitationHours[shownDay] + ' h';
-    extraPrecipProb.innerHTML = 'Precipitation Probability: ' + precipitationProbabilities[shownDay] + '%';
-    extraPrecipSum.innerHTML = 'Total Precipitaion: ' + precipitationSums[shownDay] + ' mm';
-    extraSunrise.innerHTML = 'Sunrise: ' + sunriseHours[shownDay];
-    extraSunset.innerHTML = 'Sunset: ' + sunsetHours[shownDay];
-    extraUV.innerHTML = 'Max UV Index: ' + maxUV[shownDay];
-    extraWindDir.innerHTML = 'Winddirection: ' + windDegreeDirection[shownDay] + '° / ' + windCardinalDirection[shownDay];
-    extraWindMax.innerHTML = 'Max Windspeed: ' + windspeedMax[shownDay] + ' km/h';
-    extraWindMin.innerHTML = 'Min Windspeed: ' + windspeedMin[shownDay] + ' km/h';
+        mainInfo.style.display = window.visualViewport.width > 1024 ? 'inline-block' : 'flex';
 
-    styleCards(dayNames, minTemps, maxTemps, weathercodeForHumans);
+        regionName.innerHTML = region ? region : '';
 
-    accentSlides.forEach(slide => {
-        slide.style.backgroundColor = slideColorPicker(weathercodes[shownDay]);
-    });
+        mainDate.innerHTML = dayNames[shownDay];
+
+        mainWeathercodeTitle.innerHTML = weathercodeForHumans[shownDay];
+        mainWeatherIcon.src = iconPicker(weathercodes[shownDay]);
+
+        mainMaxTemp.innerHTML = maxTemps[shownDay] + '°C';
+        mainMinTemp.innerHTML = minTemps[shownDay] + '°C';
+
+        extraPrecipHours.innerHTML = 'Precipitation Hours: ' + precipitationHours[shownDay] + ' h';
+        extraPrecipProb.innerHTML = 'Precipitation Probability: ' + precipitationProbabilities[shownDay] + '%';
+        extraPrecipSum.innerHTML = 'Total Precipitaion: ' + precipitationSums[shownDay] + ' mm';
+
+        extraSunrise.innerHTML = 'Sunrise: ' + sunriseHours[shownDay];
+        extraSunset.innerHTML = 'Sunset: ' + sunsetHours[shownDay];
+        extraUV.innerHTML = 'Max UV Index: ' + maxUV[shownDay];
+
+        extraWindDir.innerHTML = 'Winddirection: ' + windDegreeDirection[shownDay] + '° / ' + windCardinalDirection[shownDay];
+        extraWindMax.innerHTML = 'Max Windspeed: ' + windspeedMax[shownDay] + ' km/h';
+        extraWindMin.innerHTML = 'Min Windspeed: ' + windspeedMin[shownDay] + ' km/h';
+
+        styleCards(dayNames, minTemps, maxTemps, weathercodes);
+
+        accentSlides.forEach(slide => {
+            slide.style.backgroundColor = slideColorPicker(weathercodes[shownDay]);
+        });
+
+    }
+
 }
 
 function styleCards(dayArr, minTArr, maxTArr, weathercodeArr) {
@@ -211,7 +241,10 @@ function styleCards(dayArr, minTArr, maxTArr, weathercodeArr) {
     const cardDates = document.querySelectorAll('.card-date');
     const cardTMins = document.getElementsByClassName('minTempCard');
     const cardTMaxs = document.getElementsByClassName('maxTempCard');
-    const cardWeathercodes =document.querySelectorAll('.card-weathercode');
+    const cardWeathercodeTitles = document.querySelectorAll('.card-weathercode-title');
+    const cardWeatherIcons = document.querySelectorAll('.card-weather-icon');
+
+    let weathercodeForHumans = weathercodeTranslator(weathercodes);
 
     if(shownDay === 0) {
         for(let i = 0; i < 4; i++) {
@@ -219,7 +252,8 @@ function styleCards(dayArr, minTArr, maxTArr, weathercodeArr) {
             cardDates[i].innerHTML = days[i+1];
             cardTMins[i].innerHTML = minTs[i+1] + '°C';
             cardTMaxs[i].innerHTML = maxTs[i+1] + '°C';
-            cardWeathercodes[i].innerHTML = weathercodes[i+1];
+            cardWeathercodeTitles[i].innerHTML = weathercodeForHumans[i+1];
+            cardWeatherIcons[i].src = iconPicker(weathercodes[i+1]);
 
         }
 
@@ -227,14 +261,16 @@ function styleCards(dayArr, minTArr, maxTArr, weathercodeArr) {
         cardDates[0].innerHTML = days[0];
         cardTMins[0].innerHTML = minTs[0] + '°C';
         cardTMaxs[0].innerHTML = maxTs[0] + '°C';
-        cardWeathercodes[0].innerHTML = weathercodes[0];
+        cardWeathercodeTitles[0].innerHTML = weathercodeForHumans[0];
+        cardWeatherIcons[0].src = iconPicker(weathercodes[0]);
 
         for(let i = 1; i < 4; i++) {
 
             cardDates[i].innerHTML = days[i+1];
             cardTMins[i].innerHTML = minTs[i+1] + '°C';
             cardTMaxs[i].innerHTML = maxTs[i+1] + '°C';
-            cardWeathercodes[i].innerHTML = weathercodes[i+1];
+            cardWeathercodeTitles[i].innerHTML = weathercodeForHumans[i+1];
+            cardWeatherIcons[i].src = iconPicker(weathercodes[i+1]);
 
         }
 
@@ -245,13 +281,15 @@ function styleCards(dayArr, minTArr, maxTArr, weathercodeArr) {
                 cardDates[i].innerHTML = days[i];
                 cardTMins[i].innerHTML = minTs[i] + '°C';
                 cardTMaxs[i].innerHTML = maxTs[i] + '°C';
-                cardWeathercodes[i].innerHTML = weathercodes[i];  
+                cardWeathercodeTitles[i].innerHTML = weathercodeForHumans[i];
+                cardWeatherIcons[i].src = iconPicker(weathercodes[i]);  
             
             } else {
                 cardDates[i].innerHTML = days[i+1];
                 cardTMins[i].innerHTML = minTs[i+1] + '°C';
                 cardTMaxs[i].innerHTML = maxTs[i+1] + '°C';
-                cardWeathercodes[i].innerHTML = weathercodes[i+1];
+                cardWeathercodeTitles[i].innerHTML = weathercodeForHumans[i+1];
+                cardWeatherIcons[i].src = iconPicker(weathercodes[i+1]);
 
             }
             
@@ -262,14 +300,16 @@ function styleCards(dayArr, minTArr, maxTArr, weathercodeArr) {
             cardDates[i].innerHTML = days[i];
             cardTMins[i].innerHTML = minTs[i] + '°C';
             cardTMaxs[i].innerHTML = maxTs[i] + '°C';
-            cardWeathercodes[i].innerHTML = weathercodes[i];
+            cardWeathercodeTitles[i].innerHTML = weathercodeForHumans[i];
+            cardWeatherIcons[i].src = iconPicker(weathercodes[i]);
 
         }
 
         cardDates[3].innerHTML = days[4];
         cardTMins[3].innerHTML = minTs[4] + '°C';
         cardTMaxs[3].innerHTML = maxTs[4] + '°C';
-        cardWeathercodes[3].innerHTML = weathercodes[4];
+        cardWeathercodeTitles[3].innerHTML = weathercodeForHumans[4];
+        cardWeatherIcons[3].src = iconPicker(weathercodes[4]);
 
     } else {
         for(let i = 0; i < 4; i++) {
@@ -277,7 +317,8 @@ function styleCards(dayArr, minTArr, maxTArr, weathercodeArr) {
             cardDates[i].innerHTML = days[i];
             cardTMins[i].innerHTML = minTs[i] + '°C';
             cardTMaxs[i].innerHTML = maxTs[i] + '°C';
-            cardWeathercodes[i].innerHTML = weathercodes[i];
+            cardWeathercodeTitles[i].innerHTML = weathercodeForHumans[i];
+            cardWeatherIcons[i].src = iconPicker(weathercodes[i]);
 
         }
     }
@@ -300,6 +341,50 @@ function slideColorPicker(weathercode) {
     else if(chooseSnowy.includes(weathercode)) return '#c0f6fb';
     else if(chooseThunderstorm.includes(weathercode)) return '#2f4651';
     else return 'transparent';
+
+}
+
+function iconPicker(weathercode) {
+
+    const pickCloud = [3, 51];
+    const pickSun = [0, 1];
+    const pickPartCloud = [2];
+    const pickLightRain = [51, 53, 56, 61];
+    const pickRain = [55, 57, 63, 80];
+    const pickHeavyRain = [65, 67, 81, 82];
+    const pickSnow = [71, 73, 75, 77, 85, 86];
+    const pickStorm = [95, 96, 99];
+
+    let src;
+    const pre = 'resources/images/large/';
+
+    if(pickCloud.includes(weathercode)){
+        src = pre + 'cloud100.png';
+
+    } else if(pickSun.includes(weathercode)){
+        src = pre + 'sun100.png';
+
+    } else if(pickPartCloud.includes(weathercode)){
+        src = pre + 'partCloud100.png';
+
+    } else if(pickLightRain.includes(weathercode)){
+        src = pre + 'lightRain100.png';
+
+    } else if(pickRain.includes(weathercode)){
+        src = pre + 'rain100.png';
+
+    } else if(pickHeavyRain.includes(weathercode)){
+        src = pre + 'heavyRain100.png';
+
+    } else if(pickSnow.includes(weathercode)){
+        src = pre + 'snow100.png';
+
+    } else if(pickStorm.includes(weathercode)){
+        src = pre + 'storm100.png';
+
+    }
+
+    return src;
 
 }
 
@@ -522,9 +607,10 @@ function handleKeyDown() {
 
 function cardClickHandler(num) {
 
-    const prevShownDay = shownDay;
+    if(num === shownDay){
+        shownDay -= 1;
 
-    if(num === 1 && shownDay === 1){
+    } else if(shownDay > 0 && num === 1){
         shownDay = 0;
 
     } else {
@@ -532,7 +618,7 @@ function cardClickHandler(num) {
 
     }
 
-    displayData(data);
+    displayData(data, region);
 
 }
 

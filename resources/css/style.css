@@ -85,6 +85,15 @@ main {
   margin-top: 10px;
   gap: 20px;
 }
+main .region-name-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  color: #ebfbfc;
+  text-align: center;
+}
 main .weather-container {
   width: 90%;
   display: flex;
@@ -187,9 +196,13 @@ main .weather-container .chosen-day .day-info-container .main-info {
   border-radius: 10px;
   display: none;
 }
+@media screen and (max-width: 1024px) {
+  main .weather-container .chosen-day .day-info-container .main-info {
+    flex-direction: column;
+    align-items: center;
+  }
+}
 main .weather-container .chosen-day .day-info-container .main-info .date {
-  position: absolute;
-  width: 300px;
   height: 50px;
   border-radius: 10px;
   display: flex;
@@ -198,18 +211,51 @@ main .weather-container .chosen-day .day-info-container .main-info .date {
   font-size: 3rem;
   color: #fff;
 }
+@media screen and (min-width: 1025px) {
+  main .weather-container .chosen-day .day-info-container .main-info .date {
+    width: 300px;
+    position: absolute;
+  }
+}
+@media screen and (max-width: 1024px) {
+  main .weather-container .chosen-day .day-info-container .main-info .date {
+    width: 100%;
+  }
+}
 main .weather-container .chosen-day .day-info-container .main-info .weather-code-container {
   height: 320px;
   width: 320px;
   border-radius: 10px;
-  transform: translateX(50px) translateY(50px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+@media screen and (min-width: 1025px) {
+  main .weather-container .chosen-day .day-info-container .main-info .weather-code-container {
+    transform: translateX(50px) translateY(50px);
+  }
+}
+main .weather-container .chosen-day .day-info-container .main-info .weather-code-container .weathercode-title {
+  width: 100%;
+  text-align: center;
+  font-size: 1.5rem;
+  color: #ebfbfc;
+}
+main .weather-container .chosen-day .day-info-container .main-info .weather-code-container .weather-icon {
+  width: 150px;
+  height: 150px;
 }
 main .weather-container .chosen-day .day-info-container .main-info .temperature-container {
-  position: absolute;
-  top: 5%;
-  left: 40%;
   width: 20%;
   height: 90%;
+}
+@media screen and (min-width: 1025px) {
+  main .weather-container .chosen-day .day-info-container .main-info .temperature-container {
+    position: absolute;
+    top: 5%;
+    left: 40%;
+  }
 }
 main .weather-container .chosen-day .day-info-container .main-info .temperature-container div[class$=temp] {
   display: flex;
@@ -232,7 +278,6 @@ main .weather-container .chosen-day .day-info-container .extra-info {
   height: 40%;
   align-items: center;
   justify-content: space-evenly;
-  backdrop-filter: blur(10px);
   border-radius: 10px;
 }
 @media screen and (min-width: 1025px) {
@@ -246,12 +291,12 @@ main .weather-container .chosen-day .day-info-container .extra-info {
   }
 }
 @media screen and (min-width: 1025px) {
-  main .weather-container .chosen-day .day-info-container .extra-info .precip-container, main .weather-container .chosen-day .day-info-container .extra-info .sun-info-container, main .weather-container .chosen-day .day-info-container .extra-info .weather-code-container {
+  main .weather-container .chosen-day .day-info-container .extra-info .precip-container, main .weather-container .chosen-day .day-info-container .extra-info .sun-info-container, main .weather-container .chosen-day .day-info-container .extra-info .wind-container {
     width: 33%;
   }
 }
 @media screen and (max-width: 1024px) {
-  main .weather-container .chosen-day .day-info-container .extra-info .precip-container, main .weather-container .chosen-day .day-info-container .extra-info .sun-info-container, main .weather-container .chosen-day .day-info-container .extra-info .weather-code-container {
+  main .weather-container .chosen-day .day-info-container .extra-info .precip-container, main .weather-container .chosen-day .day-info-container .extra-info .sun-info-container, main .weather-container .chosen-day .day-info-container .extra-info .wind-container {
     width: 100%;
   }
 }
@@ -362,7 +407,7 @@ main .remaining-day-cards .day-card {
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  box-shadow: 0px 0px 10px -2px #e2712a;
+  background-color: #2f4651;
   transition: all 0.2s ease-in-out;
 }
 main .remaining-day-cards .day-card .card-date {
@@ -407,7 +452,19 @@ main .remaining-day-cards .day-card .card-temps div[class|=card-t] p[class$=Temp
 main .remaining-day-cards .day-card .card-weathercode {
   width: 125px;
   height: 125px;
-  border: 1px solid red;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+main .remaining-day-cards .day-card .card-weathercode .card-weathercode-title {
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  color: #ebfbfc;
 }
 main .remaining-day-cards .day-card:hover {
   cursor: pointer;

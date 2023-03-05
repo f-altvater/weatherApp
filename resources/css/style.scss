@@ -100,6 +100,16 @@ main{
     margin-top: 10px;
     gap: 20px;
 
+    .region-name-container{
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: $brightmodeBase;
+        text-align: center;
+    }
+
     .weather-container{
         width: 90%;
         display: flex;
@@ -213,10 +223,13 @@ main{
                     position: relative;
                     border-radius: 10px;
                     display: none;
+
+                    @media screen and (max-width: 1024px) {
+                        flex-direction: column;
+                        align-items: center;
+                    }
     
                     .date{
-                        position: absolute;
-                        width: 300px;
                         height: 50px;
                         border-radius: 10px;
                         display: flex;
@@ -224,21 +237,52 @@ main{
                         justify-content: center;
                         font-size: 3rem;
                         color: #fff;
+
+                        @media screen and (min-width: 1025px) {
+                            width: 300px;
+                            position: absolute;
+                        }
+
+                        @media screen and (max-width: 1024px) {
+                            width: 100%;
+                        }
                     }
     
                     .weather-code-container{
                         height: 320px;
                         width: 320px;
                         border-radius: 10px;
-                        transform: translateX(50px) translateY(50px);
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+
+                        @media screen and (min-width: 1025px) {
+                            transform: translateX(50px) translateY(50px);
+                        }
+
+                        .weathercode-title{
+                            width: 100%;
+                            text-align: center;
+                            font-size: 1.5rem;
+                            color: $brightmodeBase;
+                        }
+
+                        .weather-icon{
+                            width: 150px;
+                            height: 150px;
+                        }
                     }
     
                     .temperature-container{
-                        position: absolute;
-                        top: 5%;
-                        left: 40%;
                         width: 20%;
                         height: 90%;
+
+                        @media screen and (min-width: 1025px) {
+                            position: absolute;
+                            top: 5%;
+                            left: 40%;
+                        }
 
                         div[class$=temp]{
                             display: flex;
@@ -266,7 +310,6 @@ main{
                     height: 40%;
                     align-items: center;
                     justify-content: space-evenly;
-                    backdrop-filter: blur(10px);
                     border-radius: 10px;
 
                     @media screen and (min-width: 1025px) {
@@ -277,7 +320,7 @@ main{
                         flex-direction: column;
                     }
 
-                    .precip-container, .sun-info-container, .weather-code-container{
+                    .precip-container, .sun-info-container, .wind-container{
                         @media screen and (min-width: 1025px) {
                             width: 33%;
                         }
@@ -393,7 +436,8 @@ main{
             flex-direction: column;
             align-items: center;
             justify-content: space-evenly;
-            box-shadow: 0px 0px 10px -2px $mainAccentBase;
+            background-color: $darkmodebrighterhue;
+            //box-shadow: 0px 0px 10px -2px $mainAccentBase;
             transition: all 0.2s ease-in-out;
             
             .card-date{
@@ -444,7 +488,20 @@ main{
             .card-weathercode{
                 width: 125px;
                 height: 125px;
-                border: 1px solid red;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+
+                .card-weathercode-title{
+                    width: 100%;
+                    text-align: center;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 1.2rem;
+                    color: $brightmodeBase;
+                }
             }
         }
 

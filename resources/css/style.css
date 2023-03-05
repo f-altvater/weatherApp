@@ -120,7 +120,7 @@ main .weather-container {
 }
 @media screen and (max-width: 1024px) {
   main .weather-container {
-    height: 100vh;
+    height: 120vh;
   }
 }
 main .weather-container #day-weather-slide-one {
@@ -488,9 +488,21 @@ footer {
   border-top: 1px solid #e2712a;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   flex-wrap: wrap;
   padding: 10px;
+}
+@media screen and (max-width: 888px) {
+  footer {
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+  }
+}
+@media screen and (min-width: 889px) {
+  footer {
+    flex-direction: row;
+    justify-content: space-between;
+  }
 }
 footer .contact {
   color: #ebfbfc;
@@ -508,12 +520,13 @@ footer .apis {
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-bottom: 1px solid #e2712a;
 }
 footer .apis h3 {
   width: 100%;
   text-align: center;
   color: #ebfbfc;
-  border-bottom: #e2712a;
+  border-bottom: 1px solid #e2712a;
   font-size: 1.5rem;
 }
 footer .apis p {

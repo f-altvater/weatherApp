@@ -41,13 +41,21 @@ header{
     z-index: 99;
 
     .search-container{
-        width: 40%;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         gap: 10px;
         margin-top: 50px;
+        transition: width 0.5s ease-in-out;
+
+        @media screen and (max-width: 1024px) {
+            width: 80%;
+        }
+
+        @media screen and (min-width: 1025px) {
+            width: 60%;
+        }
 
         #search-bar{
             z-index: 5;
@@ -91,9 +99,11 @@ header{
                 width: 100%;
                 align-items: center;
                 justify-content: center;
-                height: 40px;
                 border-radius: 10px;
                 color: $brightmodeBase;
+                border-bottom: 1px solid $mainAccentBase;
+                border-top: 1px solid $mainAccentBase;
+                padding: 10px;
             }
 
             .search-suggestions:hover{
@@ -139,7 +149,7 @@ main{
         }
 
         @media screen and (max-width: 1024px) {
-            height: 120vh;
+            height: 150vh;
         }
 
         #day-weather-slide-one{

@@ -146,6 +146,11 @@ main .weather-container #day-weather-slide-one {
   transform: translateX(-46vw) translateY(23vh) scaleX(1) scaleY(1);
   animation: animateOne 25s linear infinite;
 }
+@media screen and (max-width: 600px) {
+  main .weather-container #day-weather-slide-one {
+    display: none;
+  }
+}
 main .weather-container #day-weather-slide-two {
   position: relative;
   width: 50%;
@@ -156,6 +161,11 @@ main .weather-container #day-weather-slide-two {
   top: -42vh;
   transform: translateX(43.5vw) translateY(88vh) scaleX(1) scaleY(1);
   animation: animateTwo 25s linear infinite;
+}
+@media screen and (max-width: 600px) {
+  main .weather-container #day-weather-slide-two {
+    display: none;
+  }
 }
 @keyframes animateOne {
   0% {

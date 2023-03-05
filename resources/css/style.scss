@@ -162,6 +162,10 @@ main{
             top: -42vh;
             transform: translateX(-46vw) translateY(23vh) scaleX(1) scaleY(1);
             animation: animateOne 25s linear infinite;
+
+            @media screen and (max-width: 600px){
+                display: none;
+            }
         }
 
         #day-weather-slide-two{
@@ -174,8 +178,11 @@ main{
             top: -42vh;
             transform: translateX(43.5vw) translateY(88vh) scaleX(1) scaleY(1);
             animation: animateTwo 25s linear infinite;
-        }
 
+            @media screen and (max-width: 600px){
+                display: none;
+            }
+        }
         
 
         @keyframes animateOne {

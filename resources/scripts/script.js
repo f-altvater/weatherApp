@@ -609,12 +609,12 @@ function cardClickHandler(num) {
     if(num === shownDay){
         shownDay -= 1;
 
-    } else if(shownDay > 0 && num === 1){
-        shownDay = 0;
+    } else if(shownDay > num && shownDay !== 0){
+        shownDay = num - 1;
 
     } else {
         shownDay = num;
-
+        
     }
 
     displayData(data, region);

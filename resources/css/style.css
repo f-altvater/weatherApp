@@ -120,7 +120,7 @@ main .weather-container {
 }
 @media screen and (max-width: 1024px) {
   main .weather-container {
-    height: 120vh;
+    height: 150vh;
   }
 }
 main .weather-container #day-weather-slide-one {
